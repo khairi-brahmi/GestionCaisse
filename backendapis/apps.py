@@ -1,5 +1,5 @@
 from django.apps import AppConfig
 
 
-class BackendapisConfig(AppConfig):
+class backendapisConfig(AppConfig):
     name = 'backendapis'

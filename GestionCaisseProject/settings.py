@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'rest_framework_swagger',
-    'backendapis',
+    'backendapis', 
     'cartsapis',
     'django.contrib.sites',
     'allauth',

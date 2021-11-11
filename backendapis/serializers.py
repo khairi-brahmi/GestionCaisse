@@ -7,12 +7,28 @@ class DiscountOfferSerializer(serializers.ModelSerializer):
         fields = (
            "id", "availability", "product", "purchased_products","offred_products",
         )
+
 class DiscountPercentageSerializer(serializers.ModelSerializer):
     class Meta:
         model = DiscountPercentage
         fields = (
              "id", "availability", "product","reduction_percentage",
         )
+
+class OrderProductSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = OrderProduct
+        fields = (
+             "id", "item", "quantity","get_total_item_price","get_discount_total_item_price","get_discount_total_item_quantity",
+        )
+
+class OrderSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Order
+        fields = (
+             "id", "items","get_total_price",
+        )
+
 class ProductSerializer(serializers.ModelSerializer):
     discount_offer =DiscountOfferSerializer(many=True,read_only=True)
     discount_percentage =DiscountPercentageSerializer(many=True,read_only=True)

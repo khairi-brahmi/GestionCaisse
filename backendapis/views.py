@@ -21,6 +21,15 @@ class DiscountPercentageViewSet(viewsets.ModelViewSet):
     queryset =DiscountPercentage.objects.all()
     serializer_class = DiscountPercentageSerializer
 
+class OrderProductViewSet(viewsets.ModelViewSet):
+    
+    queryset =OrderProduct.objects.all()
+    serializer_class = OrderProductSerializer
+
+class OrderViewSet(viewsets.ModelViewSet):
+    queryset =Order.objects.all()
+    serializer_class = OrderSerializer
+
 class ProductDetailViewSet(viewsets.ModelViewSet):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer   

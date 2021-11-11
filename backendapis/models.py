@@ -61,6 +61,26 @@ class DiscountOffer(models.Model):
     purchased_products=models.IntegerField(default=2,blank=True, null=True)
     offred_products=models.IntegerField(default=1,blank=True, null=True)
 
+class OrderProduct(models.Model):
+    #user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    item = models.ForeignKey(Product, on_delete=models.CASCADE)
+    quantity = models.IntegerField(default=1)
 
+    def get_total_item_price(self):
+        return self.quantity * self.item.price
 
+    def get_discount_total_item_price(self):
+        return self.quantity * self.item.price * self.item.discount_percentage.first().reduction_percentage / 100
 
+    def get_discount_total_item_quantity(self):
+        nbr_offers=self.quantity // self.item.discount_offer.first().purchased_products
+        return self.item.discount_offer.first().offred_products * nbr_offers + self.quantity
+
+class Order(models.Model):
+    items = models.ManyToManyField(OrderProduct)
+
+    def get_total_price(self):
+        total = 0
+        for item in self.items.all():
+            total = total + item.get_discount_total_item_price()
+        return total

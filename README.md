@@ -17,7 +17,7 @@ The product catalog must contain:
 50% reduction on such product
 This solution should make it possible to:
 - Create a shopping cart
-- Add products to him
+- Add products 
 - Calculate the sum and display the ticket
 
 

@@ -6,3 +6,4 @@ psycopg2-binary
 django-rest-swagger
 pyyaml
 Pillow 
+djangorestframework-simplejwt

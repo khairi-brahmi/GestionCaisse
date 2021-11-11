@@ -5,6 +5,7 @@ from rest_framework.schemas import get_schema_view
 from django.views.generic import TemplateView
 urlpatterns = [
     path('api', include('backendapis.urls')),
+    path('auth/', include('auth.urls')),
     path('admin/', admin.site.urls),
     path('openapi/', get_schema_view(
         title="Challenge DataGenius",

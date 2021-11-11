@@ -1,4 +1,5 @@
 from django.db import models
+from django.conf import settings
 from django.utils import timezone
 class Category(models.Model):
     id = models.AutoField(primary_key=True)
@@ -62,7 +63,7 @@ class DiscountOffer(models.Model):
     offred_products=models.IntegerField(default=1,blank=True, null=True)
 
 class OrderProduct(models.Model):
-    #user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     item = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.IntegerField(default=1)
 

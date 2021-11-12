@@ -6,7 +6,11 @@ from .models import *
 from rest_framework.response import Response
 
 
-
+class ProductFilter(filters.FilterSet):
+    class Meta:
+        model = Product
+        fields ="__all__"
+        
 class OrderProductFilter(filters.FilterSet):
     class Meta:
         model = OrderProduct

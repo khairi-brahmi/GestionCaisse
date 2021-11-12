@@ -1,0 +1,418 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  line-height: 1.5rem;
+}
+
+:root {
+  --container: calc(100% - 40px);
+}
+
+html,
+body {
+  font-family: proxima-nova, sans-serif;
+  background: #fff;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: rgb(75, 165, 250);
+  padding: 20px 3%;
+  box-shadow: 0 3px 2px -2px rgba(0, 0, 0, 0.3);
+  width: 100% !important;
+}
+
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  justify-content: center;
+  width: calc(100% - 40px);
+  margin-right: auto;
+  margin-left: auto;
+  margin-top: 50px;
+  margin-bottom: 100px;
+}
+
+ul {
+  list-style: none;
+}
+
+li {
+  display: inline-block;
+  padding: 0 20px;
+}
+
+li a {
+  text-decoration: none;
+  color: black;
+  transition: all 0.4s ease 0s;
+  cursor: pointer;
+}
+
+li a:hover {
+  color: rgb(179, 176, 176);
+}
+
+header .brand {
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 1.8rem;
+}
+
+img {
+  width: 350px;
+  height: auto;
+}
+
+.image {
+  background-color: #d7dadb;
+  position: relative;
+  width: 370px;
+  padding: 0;
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.3);
+  border-radius: 3px;
+  padding: 0.6rem;
+  margin: 0 10px 15px;
+  overflow: hidden;
+}
+
+.products {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 40px;
+  margin: 10px;
+  flex-wrap: wrap;
+}
+
+.products h3 {
+  font-weight: 500;
+}
+
+.products .content {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+}
+
+.products .content .price {
+  font-weight: 400;
+  color:#04047e
+}
+
+.products .content .addCart {
+  background: rgb(11, 90, 121);
+  text-decoration: none;
+  color: #fff;
+  padding: 0.3rem;
+  cursor: pointer;
+  border-radius: 3px;
+  font-size: medium;
+  border: none;
+}
+
+.products .content .addCart:hover {
+  transition: 0.3s;
+  background: hsl(41, 78%, 79%);
+}
+
+.badge {
+  display: inline-block;
+  padding: 0.25em 0.5em;
+  font-size: 0.75em;
+  font-weight: 700;
+  line-height: 1;
+  color: #000;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  border-radius: 0.25rem;
+  background: hsl(0, 67%, 70%);
+}
+
+.cart {
+  display: flex;
+  justify-content: space-between;
+  box-sizing: border-box;
+  margin-top: 35px;
+  width: calc(100% - 40px);
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.cart h2 {
+  font-weight: 100;
+  text-transform: uppercase;
+  font-size: 1.7rem;
+  margin-bottom: 25px;
+}
+
+.article {
+  width: 100%;
+  padding: 15px;
+}
+
+.recap {
+  padding: 15px;
+  height: 100%;
+  width: 35%;
+}
+
+.total-product {
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.3);
+  padding: 10px;
+}
+#btnn {
+  background-color: #6495ed;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 12px;
+  margin: 4px 2px;
+  transition-duration: 0.4s;
+  cursor: pointer;
+  border-radius: 7px;
+}
+.total-product button {
+  height: 30px;
+  padding: 0 10px;
+  background: rgb(9, 151, 9);
+  outline: none;
+  border-radius: 3px;
+  border: none;
+  color: #fff;
+  transition: 0.4s;
+  width: 100%;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.total-product button:hover {
+  background: hsl(41, 59%, 75%);
+}
+
+.total-product .div-total {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 25px;
+}
+
+.div-total .total {
+  font-size: 1.2rem;
+}
+
+.data-product {
+  display: flex;
+  justify-content: space-between;
+  height: 190px;
+  box-shadow: 0 0.125rem 0.25rem rgba(194, 43, 43, 0.3);
+  padding: 10px;
+  margin-bottom: 25px;
+}
+
+.data-product .image {
+  height: 160px;
+  width: 200px;
+  box-shadow: none;
+}
+
+.data-product img {
+  width: 100%;
+  height: auto;
+}
+
+.data-product .info {
+  display: flex;
+}
+.data-product .cout {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.cout button {
+  height: 35px;
+  padding: 0 10px;
+  background: #f39b85;
+  outline: none;
+  border-radius: 3px;
+  border: none;
+  color: #fff;
+  transition: 0.4s;
+  font-size: 1rem;
+  width: 50px;
+  cursor: pointer;
+}
+
+footer {
+  display: flex;
+  justify-content: center;
+  height: 25px;
+  background: rgb(185, 176, 176);
+  color: #fff;
+  bottom: 0px;
+}
+
+@media screen and (max-width: 370px) {
+  .recap h2 {
+    display: none;
+  }
+
+  header {
+    display: block;
+    flex-wrap: wrap;
+    clear: both;
+    text-align: center;
+    padding: 0;
+  }
+
+  header .brand {
+    margin-bottom: 5px;
+    font-weight: 600;
+  }
+
+  nav ul li a {
+    font-size: 0.9rem;
+  }
+}
+
+@media screen and (max-width: 735px) {
+  :root {
+    --container: 650px;
+  }
+
+  header {
+    display: block !important;
+    flex-wrap: wrap;
+    clear: both;
+    text-align: center;
+  }
+
+  header .brand {
+    margin-bottom: 5px;
+    font-weight: 600;
+  }
+
+  li a {
+    font-size: 1rem;
+  }
+
+  .products {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+  }
+
+  .data-product {
+    display: block;
+    height: 215px;
+  }
+
+  .data-product .cout {
+    margin-top: 40px;
+  }
+
+  .cart {
+    display: block;
+  }
+
+  .article {
+    width: 100%;
+  }
+
+  .recap {
+    width: 100%;
+  }
+
+  .cart h2 {
+    font-size: 1.3rem;
+  }
+
+  .data-product .cout {
+    display: block;
+    flex-direction: column;
+    margin-top: -35px;
+  }
+
+  .data-product .image {
+    height: 135px;
+  }
+
+  .cout .info-qty {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 15px;
+  }
+
+  .btn-trash button {
+    width: 100%;
+  }
+}
+
+.login,
+.register {
+  margin-left: 15%;
+  width: 70%;
+  text-align: center;
+}
+
+.login h2,
+.register h2 {
+  color: darksalmon;
+  font-size: 20px;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.login a {
+  text-align: center;
+}
+
+input[type="text"] {
+  background-color: #e6e6e6;
+  color: #827ffe;
+  font-size: 16px;
+  margin-bottom: 20px;
+  border: none;
+  width: 100%;
+  padding: 10px 30px;
+}
+
+input[type="password"] {
+  background-color: #e6e6e6;
+  padding: 20px 30px;
+  color: #827ffe;
+  font-size: 16px;
+  margin-bottom: 20px;
+  padding: 10px 30px;
+  border: none;
+  width: 100%;
+}
+
+input[type="submit"] {
+  padding: 10px 30px;
+  background-color: #827ffe;
+  color: #fff;
+  font-size: 20px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  border: none;
+  width: 100%;
+}
+
+.check {
+  font-size: 16px;
+}
+
+@media screen and (max-width: 1040px) {
+  :root {
+    --container: 1200px;
+  }
+}

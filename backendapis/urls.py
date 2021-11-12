@@ -11,7 +11,6 @@ router.register('order_products',OrderProductViewSet, basename='order_products')
 router.register('orders',OrderViewSet, basename='orders')
 
 urlpatterns = [
-    path('latest-products/', views.LatestProduct.as_view(), name='lastest'),
     path('/', include(router.urls)),
     
 ]

@@ -71,11 +71,17 @@ class OrderProduct(models.Model):
         return self.quantity * self.item.price
 
     def get_discount_total_item_price(self):
-        return self.quantity * self.item.price * self.item.discount_percentage.first().reduction_percentage / 100
+        if self.item.discount_percentage.first():
+            return self.quantity * self.item.price * self.item.discount_percentage.first().reduction_percentage / 100
+        else:
+            return self.quantity * self.item.price
 
     def get_discount_total_item_quantity(self):
-        nbr_offers=self.quantity // self.item.discount_offer.first().purchased_products
-        return self.item.discount_offer.first().offred_products * nbr_offers + self.quantity
+        if self.item.discount_offer.first():
+            nbr_offers=self.quantity // self.item.discount_offer.first().purchased_products
+            return self.item.discount_offer.first().offred_products * nbr_offers + self.quantity
+        else:
+            return self.quantity
 
 class Order(models.Model):
     items = models.ManyToManyField(OrderProduct)

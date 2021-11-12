@@ -7,3 +7,4 @@ django-rest-swagger
 pyyaml
 Pillow 
 djangorestframework-simplejwt
+django-filter

@@ -42,13 +42,14 @@ INSTALLED_APPS = [
     'backendapis',
     'django.contrib.sites',
     'allauth',
+    'django_filters',
 ]
 
 REST_FRAMEWORK = {
       'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework_simplejwt.authentication.JWTAuthentication',
-    ]
-    
+    ],
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
 }
 
 MIDDLEWARE = [
@@ -138,3 +139,4 @@ USE_TZ = False
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+#FILTERS_DEFAULT_LOOKUP_EXPR = 'exact'

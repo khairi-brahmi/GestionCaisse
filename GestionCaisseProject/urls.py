@@ -4,12 +4,12 @@ from django.urls import path, include
 from rest_framework.schemas import get_schema_view
 from django.views.generic import TemplateView
 urlpatterns = [
-    path('api', include('backendapis.urls')),
+    path('apis', include('backendapis.urls')),
     path('auth/', include('auth.urls')),
     path('admin/', admin.site.urls),
     path('openapi/', get_schema_view(
         title="Challenge DataGenius",
-        description="API for a supermarket cash register management solution."
+        description="API for a supermarket checkout management solution."
     ), name='openapi-schema'),
     path('docs/', TemplateView.as_view(
         template_name='doc.html',

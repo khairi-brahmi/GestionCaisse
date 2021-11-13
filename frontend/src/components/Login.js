@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import axios from 'axios';
 import Button from '@material-ui/core/Button';
 import Alert from '@material-ui/lab/Alert';
-import { Divider } from "@material-ui/core";
+import jwt from 'jwt-decode'
 const Login = () => {
   setTimeout((()=> localStorage.removeItem("new")),6000)
   let url="http://localhost:8000/auth/login/"
@@ -23,10 +23,10 @@ const Login = () => {
       .then((response) => {
         console.log(response)
           if (response.data.access) {
-  
-              localStorage.setItem("user", JSON.stringify({
-                  token: response.data.access,
-              }));
+            const user = jwt(response.data.access); 
+            localStorage.setItem("token", JSON.stringify({token:response.data}));
+          
+              localStorage.setItem("user", JSON.stringify(user));
          
               window.location.replace('/')
           }
@@ -51,7 +51,7 @@ const Login = () => {
           <div className="username">
             <input
               type="text"
-              placeholder="Numéro téléphone"
+              placeholder="Nom d'utilisateur"
              // value={this.state.email}
             //  onChange={this.update}
             onChange={(e) => setMob(e.target.value)}
@@ -74,7 +74,7 @@ const Login = () => {
      <br/>    
      <br/> 
      {err?
-      <Alert severity="error">Votre Mot de passe Ou Numéro de téléphone est Incorrecte!</Alert>
+      <Alert severity="error">Votre Mot de passe Ou Nom d'utilisateur est Incorrecte!</Alert>
       :
       null
      }

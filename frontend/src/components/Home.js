@@ -41,14 +41,14 @@ const useStyles = makeStyles((theme) => ({
 const Home = () => {
   let storage = localStorage.getItem("user");
   let user = JSON.parse(storage || JSON.stringify({}))
+  let api_url="http://localhost:8000/apis/"
 console.log(user)
   const classes = useStyles();
 const [dataa,setDataa]=useState([]);
 
-let token="eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxMSIsImlhdCI6MTYyMzAxMDI1NywiZXhwIjoxNjIzNjE1MDU3fQ.ZDisis2KlSessqvjUM8aTAUdJtqsxGwCiQvjLJFR9LFHQWVu3EJ_EfOvNEZ9uF0UaqN4J0dkMKkV8Fm2tjHLOg"
 async function getProducts(){
 
-await axios.get('http://localhost:8000/apis/products/')
+await axios.get(api_url+'products/')
 .then(res => {
   setDataa(res.data)
   console.log('result',res.data)
@@ -67,10 +67,9 @@ const [addcart, setAddCart] =useState([]);
 const [count, setCount] = React.useState(0);
 const [w, setWW] = React.useState(0);
 
-let addcrt="http://localhost:8000/apis/order_products/";
-let getcrt="http://localhost:8000/apis/order_products/?user="
-let updateQtt="http://localhost:8080/api/addtocart/updateQtyForCart"
-let rmProc="http://localhost:8080/api/addtocart/removeProductFromCart"
+let addcrt=api_url+"order_products/";
+let getcrt=api_url+"order_products/?user="
+
 async function getCart(user_id){
 
   await axios.get(getcrt+user_id)
@@ -88,14 +87,14 @@ async function getCart(user_id){
 console.log(w)
 async function addProd(id,name,price){
   var dataItem={
-    "user":1,
+    "user":user.user_id,
     "item":id,
     "quantity":quantity
   }
   await axios.post(addcrt,dataItem)
   .then(()=>{
   
-    getCart(1)
+    getCart(user.user_id)
 
   })
 
@@ -103,7 +102,7 @@ async function addProd(id,name,price){
   const [quantity, setQuantity] = useState(1);
 async function DeleteFromPanier(idd){
 
-await axios.delete("http://localhost:8000/apis/order_products/"+idd+"/")
+await axios.delete(api_url+"order_products/"+idd+"/")
 .then(()=>getCart(1))
 
 }
@@ -112,13 +111,13 @@ async function handleChange(event,id) {
   let dat={
   "quantity":event
 }
-  await axios.patch("http://localhost:8000/apis/order_products/"+id+'/',dat)
-  .then(()=>getCart(1))
+  await axios.patch(api_url+"order_products/"+id+'/',dat)
+  .then(()=>getCart(user.user_id))
 };
 
 useEffect(()=>{
   getProducts()
-  getCart(1)
+  getCart(user.user_id)
 },[])
 const [open, setOpen] = React.useState(false);
 const [open1, setOpen1] = React.useState(false);
@@ -144,7 +143,7 @@ async function handleClose1() {
   return (
     <div>
       <header>
-      <div >DataGeniusChallenge</div>
+      <div style={{fontFamily:"Times, Times New Roman, serif",fontSize:"1.3em",color:"white",fontWeight:'bolder'}}>DataGeniusChallenge</div>
       <nav>
         <ul>
        
@@ -238,17 +237,17 @@ edge="end" className={classes.menuButton} color="inherit" aria-label="menu">
               :
               <p style={{color:"black",fontSize:"0.8em"}} >Prix:
            <b style={{color:"black",fontSize:"1.2em",fontWeight:"bold"}}> {i.get_total_item_price} $</b><b style={{color:"red",fontSize:"1.4em"}}> 
-              {i.get_discount_total_item_quantity-i.quantity>0?
-              <i>
+             
+              
+              </b></p>
+            }
+               {i.get_discount_total_item_quantity-i.quantity>0?
+              <i style={{color:"red"}}>
                + {i.get_discount_total_item_quantity-i.quantity} gratuit(s)
                 </i>
                 :
                 <i>
                   </i>}
-              
-              </b></p>
-            }
-              
               
               </Grid>
               <Grid item xs="2">
@@ -392,8 +391,23 @@ edge="end" className={classes.menuButton} color="inherit" aria-label="menu">
               <img src={"http://localhost:8000"+d.get_prod_image} />
               <h3 style={{fontSize:"1em",fontFamily:"inherit",fontWeight:"bolder"}}>{d.name}</h3>
               <p style={{color:"grey",fontSize:"0.75em"}}>{d.description}</p>
+              <br/>
+              {d.discount_offer.length>0?
+                
+                <h3 style={{color:"red",fontWeight:"bold",fontSize:"0.9em"}} className="price"> {d.discount_offer[0].purchased_products} produits achetés = {d.discount_offer[0].offred_products} offert </h3>
+                :
+               null
+                }
               <div className="content">
-                <h3 className="price">Prix: {d.price} $</h3>
+                
+                {d.discount_percentage.length>0?
+                
+                <h3 className="price">Prix:<strike >{d.price} $</strike> <b style={{color:"red"}}> {d.discount_percentage[0].reduction_percentage * d.price /100} $ </b> </h3>
+                :
+                <h3 className="price">Prix: {d.price} $</h3> 
+                }
+                
+
                 {localStorage.getItem("user")?
                 <div>
                    {addcart.filter(ch => ch.item== d.id).length==0?

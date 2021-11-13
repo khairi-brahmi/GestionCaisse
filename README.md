@@ -21,7 +21,7 @@ This solution should make it possible to:
 - Calculate the sum and display the ticket
 
 
-Getting Up and Running Locally With Docker
+Backend (Dajngo-RF): Getting Up and Running Locally With Docker
 ==========================================
  
 The steps below will get you up and running with a local development environment.

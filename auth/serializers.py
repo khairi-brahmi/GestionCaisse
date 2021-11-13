@@ -5,7 +5,9 @@ from rest_framework.validators import UniqueValidator
 from django.contrib.auth.password_validation import validate_password
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
-
+    '''
+    créer un token pour l'authentification .. en ajoutant le nom d'utilisateur et l'email
+    '''
     @classmethod
     def get_token(cls, user):
         token = super(MyTokenObtainPairSerializer, cls).get_token(user)
@@ -15,6 +17,9 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
         return token
 
 class RegisterSerializer(serializers.ModelSerializer):
+    '''
+    Serializer pour enregistrer un compte utilisateur 
+    '''
     email = serializers.EmailField(
             required=True,
             validators=[UniqueValidator(queryset=User.objects.all())]

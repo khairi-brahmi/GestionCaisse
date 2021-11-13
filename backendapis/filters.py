@@ -9,7 +9,9 @@ from rest_framework.response import Response
 class ProductFilter(filters.FilterSet):
     class Meta:
         model = Product
-        fields ="__all__"
+        fields = {
+            'category': ['exact'],
+        }
         
 class OrderProductFilter(filters.FilterSet):
     class Meta:

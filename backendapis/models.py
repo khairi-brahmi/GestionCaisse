@@ -25,9 +25,9 @@ class Product(models.Model):
     def __str__(self):
         return self.name
     def get_prod_image(self):
-        if self.image:
-            return self.image.url 
-        return ''
+        if not self.image:
+            return f'{settings.STATIC_URL}product.png'
+        return self.image.url
 
 class DiscountPercentage(models.Model):
     """
@@ -66,6 +66,10 @@ class OrderProduct(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     item = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.IntegerField(default=1)
+
+
+    def get_item_name(self):
+        return self.item.name
 
     def get_total_item_price(self):
         return self.quantity * self.item.price

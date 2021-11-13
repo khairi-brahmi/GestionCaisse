@@ -48,7 +48,7 @@ const [dataa,setDataa]=useState([]);
 let token="eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxMSIsImlhdCI6MTYyMzAxMDI1NywiZXhwIjoxNjIzNjE1MDU3fQ.ZDisis2KlSessqvjUM8aTAUdJtqsxGwCiQvjLJFR9LFHQWVu3EJ_EfOvNEZ9uF0UaqN4J0dkMKkV8Fm2tjHLOg"
 async function getProducts(){
 
-await axios.get('http://localhost:8080/api/product/getAll',{ headers: {Authorization: 'Bearer ' + token}})
+await axios.get('http://localhost:8000/apis/products/')
 .then(res => {
   setDataa(res.data)
   console.log('result',res.data)
@@ -67,20 +67,18 @@ const [addcart, setAddCart] =useState([]);
 const [count, setCount] = React.useState(0);
 const [w, setWW] = React.useState(0);
 
-let addcrt="http://localhost:8080/api/addtocart/addProduct";
-let getcrt="http://localhost:8080/api/addtocart/getCartsByUserId"
+let addcrt="http://localhost:8000/apis/order_products/";
+let getcrt="http://localhost:8000/apis/order_products/?user="
 let updateQtt="http://localhost:8080/api/addtocart/updateQtyForCart"
 let rmProc="http://localhost:8080/api/addtocart/removeProductFromCart"
 async function getCart(user_id){
-  var data={
-    "userId":user_id
-}
-  await axios.post(getcrt,data)
+
+  await axios.get(getcrt+user_id)
   .then((t)=>{
    setAddCart(t.data)
     setCount(t.data.length)
     let wk=0
-    t.data.map((b)=>(wk=wk+b.price))
+    t.data.map((b)=>(wk=wk+b.get_discount_total_item_price))
     setWW(wk)
 
   })
@@ -90,15 +88,14 @@ async function getCart(user_id){
 console.log(w)
 async function addProd(id,name,price){
   var dataItem={
-    "productId":id,
-    "userId":10,
-    "qty":quantity,
-    "price":price
+    "user":1,
+    "item":id,
+    "quantity":quantity
   }
   await axios.post(addcrt,dataItem)
   .then(()=>{
   
-    getCart(10)
+    getCart(1)
 
   })
 
@@ -106,26 +103,22 @@ async function addProd(id,name,price){
   const [quantity, setQuantity] = useState(1);
 async function DeleteFromPanier(idd){
 
-  let d={"userId":10,
-  "cartId":idd
-  }
-await axios.post(rmProc,d)
-.then(()=>getCart(10))
+await axios.delete("http://localhost:8000/apis/order_products/"+idd+"/")
+.then(()=>getCart(1))
 
 }
 
-async function handleChange(event,id,price) {
-  let dat={"cartId":id,
-  "userId":10,
-  "qty":event,
-  "price":event*price}
-  await axios.post(updateQtt,dat)
-  .then(()=>getCart(10))
+async function handleChange(event,id) {
+  let dat={
+  "quantity":event
+}
+  await axios.patch("http://localhost:8000/apis/order_products/"+id+'/',dat)
+  .then(()=>getCart(1))
 };
 
 useEffect(()=>{
   getProducts()
-  getCart(10)
+  getCart(1)
 },[])
 const [open, setOpen] = React.useState(false);
 const [open1, setOpen1] = React.useState(false);
@@ -151,7 +144,7 @@ async function handleClose1() {
   return (
     <div>
       <header>
-      <div className="brand">IF4 Phones</div>
+      <div >DataGeniusChallenge</div>
       <nav>
         <ul>
        
@@ -179,7 +172,7 @@ async function handleClose1() {
           </li>
           <li>
 <IconButton  edge="end" className={classes.menuButton} color="inherit" aria-label="menu">
-<AccountCircleIcon/>{user.user.name}
+<AccountCircleIcon/>Khairi Brahmi
 </IconButton>
 <IconButton onClick={async () => {
       
@@ -214,7 +207,7 @@ edge="end" className={classes.menuButton} color="inherit" aria-label="menu">
       <Dialog
         open={open}
         onClose={handleClose}
-       
+        fullWidth={true}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
@@ -224,10 +217,39 @@ edge="end" className={classes.menuButton} color="inherit" aria-label="menu">
                 <DialogContent>
                 {addcart.map((i)=>{
                   return(
-                    <Grid container spacing={3}>
+                    <div>
+                    <Grid container spacing={3} id="alert-dialog-description">
               <Grid item xs="8">
-              <b>{i.productName}</b>
-              <p style={{color:"grey",fontSize:"0.75em"}}>Prix: {i.price} $</p>
+              <b>{i.get_item_name}</b> <br/>
+              
+              
+              {i.get_total_item_price!=i.get_discount_total_item_price?
+                <p style={{color:"black",fontSize:"0.8em"}} >Prix:
+               <strike ><b style={{color:"black",fontSize:"1.2em",fontWeight:"bold"}}> {i.get_total_item_price} $</b></strike><b style={{color:"red",fontSize:"1.4em"}}> {i.get_discount_total_item_price}$ 
+              {i.get_discount_total_item_quantity-i.quantity>0?
+              <i>
+               + {i.get_discount_total_item_quantity-i.quantity} gratuit(s)
+                </i>
+                :
+                <i>
+                  </i>}
+              
+              </b></p>
+              :
+              <p style={{color:"black",fontSize:"0.8em"}} >Prix:
+           <b style={{color:"black",fontSize:"1.2em",fontWeight:"bold"}}> {i.get_total_item_price} $</b><b style={{color:"red",fontSize:"1.4em"}}> 
+              {i.get_discount_total_item_quantity-i.quantity>0?
+              <i>
+               + {i.get_discount_total_item_quantity-i.quantity} gratuit(s)
+                </i>
+                :
+                <i>
+                  </i>}
+              
+              </b></p>
+            }
+              
+              
               </Grid>
               <Grid item xs="2">
               <InputLabel style={{color:"grey",fontSize:"0.75em"}}>Qantité</InputLabel>
@@ -235,7 +257,7 @@ edge="end" className={classes.menuButton} color="inherit" aria-label="menu">
               style={{color:"grey",fontSize:"0.75em"}}
                  labelId="demo-simple-select-outlined-label"
                  id="demo-simple-select-outlined"
-                value={i.qty}
+                value={i.quantity}
                 onChange={(e)=>handleChange(e.target.value,i.id,i.price)}
               >
                 <MenuItem value={1}>1</MenuItem>
@@ -251,7 +273,7 @@ edge="end" className={classes.menuButton} color="inherit" aria-label="menu">
               </Select>
                  
               </Grid>
-             
+   
               <Grid item xs="2">
              
                   <button onClick={()=>DeleteFromPanier(i.id)}>
@@ -259,21 +281,23 @@ edge="end" className={classes.menuButton} color="inherit" aria-label="menu">
                   </button>
                 
               </Grid>
-              <Divider/>
+              
               </Grid>
+              <Divider/>
+              </div>
                   )
                 })}
               
-              <hr/>  
+              <hr/>    <hr/>  
               <Typography style={{textAlign:"center",fontFamily:"serif"}}variant="h5" component="h2">
                    Totale: {w}$
               </Typography>
               </DialogContent>
                 <DialogActions>
           
-                <Button variant="contained" onClick={()=>handleClickOpen1()} color="primary">
+                <button  onClick={()=>handleClickOpen1()} className="addCart">
                 Passer la commande
-                </Button>
+                </button>
               
                <Button onClick={()=>handleClose()} color="primary">
                Retour
@@ -351,7 +375,7 @@ edge="end" className={classes.menuButton} color="inherit" aria-label="menu">
               
         <DialogActions>
     
-           <Button variant="contained" onClick={()=>{}} color="primary">
+           <Button variant="contained" onClick={()=>{}} className="addCart">
            Comfirmer
            </Button>
          
@@ -365,14 +389,14 @@ edge="end" className={classes.menuButton} color="inherit" aria-label="menu">
           return (
            
             <div className="image" key={d.id}>               
-              <img src={d.image} />
+              <img src={"http://localhost:8000"+d.get_prod_image} />
               <h3 style={{fontSize:"1em",fontFamily:"inherit",fontWeight:"bolder"}}>{d.name}</h3>
               <p style={{color:"grey",fontSize:"0.75em"}}>{d.description}</p>
               <div className="content">
                 <h3 className="price">Prix: {d.price} $</h3>
                 {localStorage.getItem("user")?
                 <div>
-                   {addcart.filter(ch => ch.productName == d.name).length==0?
+                   {addcart.filter(ch => ch.item== d.id).length==0?
                <button onClick={() => addProd(d.id,d.name,d.price,3)} className="addCart">
                Ajouter au Panier
              </button>

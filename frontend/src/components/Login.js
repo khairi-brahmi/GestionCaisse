@@ -6,7 +6,7 @@ import Alert from '@material-ui/lab/Alert';
 import { Divider } from "@material-ui/core";
 const Login = () => {
   setTimeout((()=> localStorage.removeItem("new")),6000)
-  let url="http://localhost:8080/api/login/user"
+  let url="http://localhost:8000/auth/login/"
   const [mob, setMob] = useState("")
   const [err, setErr] = useState(false)
 
@@ -14,19 +14,18 @@ const Login = () => {
   async function SubmitLogin() {
     let data={
  
-      "mobile":mob.toString(),
+      "username":mob.toString(),
       "password":pwd.toString()
   
   }
 
     await axios.post(url,data)
       .then((response) => {
-        
-          if (response.data.token) {
+        console.log(response)
+          if (response.data.access) {
   
               localStorage.setItem("user", JSON.stringify({
-                  token: response.data.token,
-                  user: response.data.user_profile_details
+                  token: response.data.access,
               }));
          
               window.location.replace('/')

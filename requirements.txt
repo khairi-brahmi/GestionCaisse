@@ -8,3 +8,4 @@ pyyaml
 Pillow 
 djangorestframework-simplejwt
 django-filter
+django-cors-headers

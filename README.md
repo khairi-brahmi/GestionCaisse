@@ -64,3 +64,19 @@ Removing All Unused Objects
     $ docker rm $(docker ps -a -q)
     $ docker system prune
     $ docker system prune --volumes
+
+
+# Partie Front-end (Reactjs)
+
+In the project directory access the "frontend" folder :
+
+## `cd /frontend`
+
+Then you can run:
+
+### `npm i`
+
+Then :
+
+### `npm start`
+Open [http://localhost:3000](http://localhost:3000) to view it in the browser.

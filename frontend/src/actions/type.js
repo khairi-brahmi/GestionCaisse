@@ -1,4 +1,0 @@
-export const ADD_TO_CART = 'ADD_TO_CART';
-export const GET_NB_PRODUCT = 'GET_NB_PRODUCT';
-export const REMOVE_PRODUCT_TO_CART = 'REMOVE_PRODUCT_TO_CART';
-export const EDIT_QUANTITY = 'EDIT_QUANTITY';
